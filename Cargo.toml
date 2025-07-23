@@ -1,0 +1,12 @@
+[package]
+name = "cli-keyhook"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "A CLI wrapper that intercepts and remaps keyboard input"
+
+[dependencies]
+nix = { version = "0.30", features = ["term", "poll", "process", "fs"] }
+signal-hook = "0.3"
+clap = { version = "4.0", features = ["derive"] }
+anyhow = "1.0"
