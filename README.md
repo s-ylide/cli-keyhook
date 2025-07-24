@@ -16,6 +16,8 @@ A CLI wrapper that intercepts and remaps keyboard input using PTY (pseudo-termin
 
 ## Installation
 
+- Rust 1.78.0 or higher (MSRV - Minimum Supported Rust Version)
+
 ```bash
 git clone https://github.com/s-ylide/cli-keyhook.git
 cargo install --path cli-keyhook

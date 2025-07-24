@@ -85,7 +85,7 @@ fn hex_decode(hex_str: &str) -> Result<Vec<u8>, String> {
         return Err("hex string cannot be empty".into());
     }
 
-    if !hex_str.len().is_multiple_of(2) {
+    if hex_str.len() % 2 != 0 {
         return Err(format!(
             "hex string must have even length, got {} characters",
             hex_str.len()
@@ -171,12 +171,11 @@ fn parent_process(master: OwnedFd, child_pid: Pid, keymap: KeyMap) -> Result<()>
         ) {
             Ok(n) => {
                 // Check child process status on every iteration
-                if let Ok(status) =
-                    nix::sys::wait::waitpid(child_pid, Some(nix::sys::wait::WaitPidFlag::WNOHANG))
-                    && status != WaitStatus::StillAlive
-                {
-                    child_exited = true;
-                    break;
+                if let Ok(status) = nix::sys::wait::waitpid(child_pid, Some(nix::sys::wait::WaitPidFlag::WNOHANG)) {
+                    if status != WaitStatus::StillAlive {
+                        child_exited = true;
+                        break;
+                    }
                 }
 
                 if n != 0 {
@@ -352,11 +351,11 @@ fn setup_signal_handler(master: &OwnedFd) -> Result<()> {
         };
 
         for signal in signals.forever() {
-            if signal == SIGWINCH
-                && let Ok(winsize) = get_terminal_size()
-            {
-                unsafe {
-                    nix::libc::ioctl(master_fd, nix::libc::TIOCSWINSZ, &winsize);
+            if signal == SIGWINCH {
+                if let Ok(winsize) = get_terminal_size() {
+                    unsafe {
+                        nix::libc::ioctl(master_fd, nix::libc::TIOCSWINSZ, &winsize);
+                    }
                 }
             }
         }
