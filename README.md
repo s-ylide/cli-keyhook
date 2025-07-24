@@ -152,6 +152,14 @@ With adding this to your `keybindings.json`:
 ]
 ```
 
+#### Previous work
+
+Other solutions to this challenge (which I have not tried):
+
+- https://github.com/appositeit/claude-code-better-enter
+- https://www.reddit.com/r/ClaudeAI/comments/1lt4zaf/swap_ctrlenter_to_shiftenter_in_claude_code_on/ (Windows)
+- https://github.com/nkmr-jp/prompt-line (macOS)
+
 ## Common Key Codes
 
 | Key    | Hex Code |
